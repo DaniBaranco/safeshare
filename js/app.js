@@ -31,6 +31,9 @@
   const backToCreateBtn = $('#backToCreateBtn');
 
   const installBtn = $('#install-btn');
+  const howBtn = $('#how-btn');
+  const howModal = $('#howModal');
+  const howCloseBtn = $('#howCloseBtn');
 
   /* ---------------- Detector en vivo ---------------- */
   secretInput.addEventListener('input', () => {
@@ -157,6 +160,13 @@
       setTimeout(() => (btn.innerHTML = original), 1400);
     });
   }
+
+  /* ---------------- Modal "Cómo funciona" ---------------- */
+  howBtn.addEventListener('click', () => howModal.classList.remove('hidden'));
+  howCloseBtn.addEventListener('click', () => howModal.classList.add('hidden'));
+  howModal.addEventListener('click', (e) => {
+    if (e.target === howModal) howModal.classList.add('hidden');
+  });
 
   /* ---------------- Instalación PWA ---------------- */
   let deferredPrompt = null;

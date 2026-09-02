@@ -29,6 +29,9 @@
   <header class="topbar">
     <div class="brand"><span class="brand-logo" aria-hidden="true"><i class="fi fi-rr-lock"></i></span> SafeShare</div>
     <div class="topbar-actions">
+      <button id="how-btn" class="btn btn-ghost small" type="button" aria-label="Cómo funciona" aria-haspopup="dialog">
+        <i class="fi fi-rr-info"></i><span class="btn-label"> Cómo funciona</span>
+      </button>
       <button id="install-btn" class="btn btn-primary small hidden" aria-label="Instalar">
         <i class="fi fi-rr-download"></i><span class="btn-label"> Instalar</span>
       </button>
@@ -153,14 +156,21 @@
           <p>Sin el PIN, el enlace es un texto cifrado sin sentido.</p>
         </div>
       </div>
-
-      <ul class="how-list">
-        <li><i class="fi fi-rr-lock"></i> El cifrado (AES-256) ocurre en tu dispositivo: la app nunca envía tu dato en claro a ningún servidor.</li>
-        <li><i class="fi fi-rr-link"></i> Todo el contenido cifrado viaja dentro del propio enlace (tras el símbolo #), que ni siquiera SafeShare llega a ver.</li>
-        <li><i class="fi fi-rr-triangle-warning"></i> El enlace <strong>no se autodestruye</strong> ni caduca solo: seguirá siendo válido mientras alguien tenga el enlace y el PIN. No sustituye borrar el mensaje del chat.</li>
-        <li><i class="fi fi-rr-cross-circle"></i> No compartas nunca el PIN por el mismo canal que el enlace, y evita datos extremadamente críticos (tarjeta completa + CVV): para eso, usa siempre canales oficiales del banco.</li>
-      </ul>
     </section>
+
+    <!-- ============== MODAL "CÓMO FUNCIONA" ============== -->
+    <div id="howModal" class="modal-overlay hidden">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="howModalTitle">
+        <h3 id="howModalTitle" class="modal-title"><i class="fi fi-rr-info"></i> Puntos clave de seguridad</h3>
+        <ul class="how-list">
+          <li><i class="fi fi-rr-lock"></i> <span>El cifrado (AES-256) ocurre en tu dispositivo: la app nunca envía tu dato en claro a ningún servidor.</span></li>
+          <li><i class="fi fi-rr-link"></i> <span>Todo el contenido cifrado viaja dentro del propio enlace (tras el símbolo #), que ni siquiera SafeShare llega a ver.</span></li>
+          <li><i class="fi fi-rr-triangle-warning"></i> <span>El enlace no se autodestruye ni caduca solo: seguirá siendo válido mientras alguien tenga el enlace y el PIN. No sustituye borrar el mensaje del chat.</span></li>
+          <li><i class="fi fi-rr-cross-circle"></i> <span>No compartas nunca el PIN por el mismo canal que el enlace, y evita datos extremadamente críticos (tarjeta completa + CVV): para eso, usa siempre canales oficiales del banco.</span></li>
+        </ul>
+        <button id="howCloseBtn" class="btn btn-primary" type="button" style="width:100%">Entendido</button>
+      </div>
+    </div>
   </main>
 
   <footer class="footer">
