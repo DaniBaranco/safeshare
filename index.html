@@ -32,9 +32,6 @@
       <button id="install-btn" class="btn btn-primary small hidden" aria-label="Instalar">
         <i class="fi fi-rr-download"></i><span class="btn-label"> Instalar</span>
       </button>
-      <button id="how-btn" class="btn btn-ghost small" aria-label="Cómo funciona">
-        <i class="fi fi-rr-interrogation"></i><span class="btn-label"> Cómo funciona</span>
-      </button>
     </div>
   </header>
 
@@ -156,22 +153,15 @@
           <p>Sin el PIN, el enlace es un texto cifrado sin sentido.</p>
         </div>
       </div>
-    </section>
-  </main>
 
-  <!-- ============== MODAL: CÓMO FUNCIONA / LIMITACIONES ============== -->
-  <div id="howModal" class="modal-overlay hidden">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="howTitle">
-      <h3 class="modal-title" id="howTitle"><i class="fi fi-rr-shield-check"></i> Cómo funciona SafeShare</h3>
       <ul class="how-list">
         <li><i class="fi fi-rr-lock"></i> El cifrado (AES-256) ocurre en tu dispositivo: la app nunca envía tu dato en claro a ningún servidor.</li>
         <li><i class="fi fi-rr-link"></i> Todo el contenido cifrado viaja dentro del propio enlace (tras el símbolo #), que ni siquiera SafeShare llega a ver.</li>
         <li><i class="fi fi-rr-triangle-warning"></i> El enlace <strong>no se autodestruye</strong> ni caduca solo: seguirá siendo válido mientras alguien tenga el enlace y el PIN. No sustituye borrar el mensaje del chat.</li>
         <li><i class="fi fi-rr-cross-circle"></i> No compartas nunca el PIN por el mismo canal que el enlace, y evita datos extremadamente críticos (tarjeta completa + CVV): para eso, usa siempre canales oficiales del banco.</li>
       </ul>
-      <button id="howCloseBtn" class="btn btn-primary">Entendido</button>
-    </div>
-  </div>
+    </section>
+  </main>
 
   <footer class="footer">
     <p>SafeShare no almacena ni transmite tus datos a ningún servidor. Todo el cifrado ocurre en tu dispositivo.</p>
