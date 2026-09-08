@@ -1,23 +1,38 @@
 // sw.js — Service Worker de SafeShare.
 // Estrategia: precache del "app shell" para que funcione sin conexión,
-// network-first en el HTML y stale-while-revalidate en el resto.
-// Nota de privacidad: aquí solo se cachean los ARCHIVOS de la app
-// (HTML/JS/CSS/fuentes/iconos). El dato cifrado vive únicamente en el
-// fragmento de la URL, nunca pasa por el service worker ni por caché.
+// network-first en navegaciones y recursos propios, stale-while-revalidate
+// en el resto.
+// Nota de privacidad: aquí solo se cachean los ARCHIVOS de la app. El dato
+// cifrado vive únicamente en el fragmento de la URL, que nunca llega al
+// service worker ni a la caché.
 
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CACHE = `safeshare-${VERSION}`;
 
 const APP_SHELL = [
   './',
   './index.html',
-  './css/styles.css',
-  './css/fonts.css',
-  './css/icons.css',
-  './js/app.js',
-  './js/crypto.js',
-  './js/detector.js',
   './manifest.webmanifest',
+  './css/tokens.css',
+  './css/fonts.css',
+  './css/base.css',
+  './css/layout.css',
+  './css/components.css',
+  './js/app.js',
+  './js/config.js',
+  './js/core/crypto.js',
+  './js/core/detector.js',
+  './js/core/link.js',
+  './js/services/clipboard.js',
+  './js/services/share.js',
+  './js/services/pwa.js',
+  './js/ui/dom.js',
+  './js/ui/toast.js',
+  './js/ui/reveal.js',
+  './js/ui/header.js',
+  './js/ui/mode.js',
+  './js/features/create.js',
+  './js/features/open.js',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/maskable-512.png',
@@ -25,10 +40,7 @@ const APP_SHELL = [
   './icons/favicon-32.png',
   './fonts/inter-400.woff2',
   './fonts/inter-500.woff2',
-  './fonts/inter-600.woff2',
   './fonts/inter-700.woff2',
-  './fonts/inter-800.woff2',
-  './fonts/icons/uicons-regular-rounded.woff2',
 ];
 
 self.addEventListener('install', (event) => {

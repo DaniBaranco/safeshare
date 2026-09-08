@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>SafeShare · Comparte datos confidenciales protegidos</title>
+  <title>SafeShare · Comparte lo confidencial sin dejar rastro</title>
+  <meta
+    name="description"
+    content="Cifra un dato confidencial (teléfono, IBAN, DNI, códigos...) en tu propio dispositivo y compártelo por WhatsApp mediante un enlace protegido con PIN. Sin servidores, sin registro."
+  />
 
   <!-- PWA -->
   <link rel="manifest" href="manifest.webmanifest" />
-  <meta name="theme-color" content="#2563eb" />
-  <meta
-    name="description"
-    content="Cifra un dato confidencial (teléfono, número de cuenta, DNI...) en tu propio dispositivo y compártelo por WhatsApp mediante un enlace protegido con PIN. 100% local, sin servidores."
-  />
+  <meta name="theme-color" content="#2760c2" />
   <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png" />
   <link rel="apple-touch-icon" href="icons/apple-touch-180.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -20,165 +20,425 @@
   <meta name="mobile-web-app-capable" content="yes" />
 
   <link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="fonts/icons/uicons-regular-rounded.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/inter-700.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/fonts.css" />
-  <link rel="stylesheet" href="css/icons.css" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
 </head>
-<body>
-  <header class="topbar">
-    <div class="brand"><span class="brand-logo" aria-hidden="true"><i class="fi fi-rr-lock"></i></span> SafeShare</div>
-    <div class="topbar-actions">
-      <button id="how-btn" class="btn btn-ghost small" type="button" aria-label="Cómo funciona" aria-haspopup="dialog">
-        <i class="fi fi-rr-info"></i><span class="btn-label"> Cómo funciona</span>
-      </button>
-      <button id="install-btn" class="btn btn-primary small hidden" aria-label="Instalar">
-        <i class="fi fi-rr-download"></i><span class="btn-label"> Instalar</span>
-      </button>
+<body data-mode="create">
+
+  <!-- ============ Sprite de iconos (trazos 24x24, estilo Lucide, licencia ISC) ============ -->
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-warning" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></symbol>
+    <symbol id="i-cloud-off" viewBox="0 0 24 24"><path d="m2 2 20 20"/><path d="M5.782 5.782A7 7 0 0 0 9 19h8.5a4.5 4.5 0 0 0 1.307-.193"/><path d="M21.532 16.5A4.5 4.5 0 0 0 17.5 10h-1.79A7.008 7.008 0 0 0 10 5.07"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+    <symbol id="i-hash" viewBox="0 0 24 24"><path d="M4 9h16"/><path d="M4 15h16"/><path d="M10 3 8 21"/><path d="M16 3l-2 18"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-user-x" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 8 5 5"/><path d="m22 8-5 5"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></symbol>
+  </svg>
+
+  <!-- ============ Cabecera ============ -->
+  <header class="header" id="top">
+    <div class="container header__inner">
+      <a class="brand" href="./" aria-label="SafeShare, ir al inicio">
+        <span class="brand__mark"><svg class="icon"><use href="#i-lock"/></svg></span>
+        <span>SafeShare</span>
+      </a>
+      <nav class="header__nav" data-only="create" aria-label="Secciones de la página">
+        <a href="#por-que">Por qué SafeShare</a>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#seguridad">Seguridad</a>
+        <a href="#preguntas">Preguntas</a>
+      </nav>
+      <div class="header__actions">
+        <button id="installBtn" class="btn btn--outline btn--s" type="button" hidden aria-label="Instalar la app">
+          <svg class="icon icon--xs"><use href="#i-download"/></svg><span class="header__label">Instalar</span>
+        </button>
+        <a href="#proteger" class="btn btn--primary btn--s" data-only="create">Proteger un dato</a>
+      </div>
     </div>
   </header>
 
-  <main class="screen">
-    <!-- ============== HERO ============== -->
-    <section id="hero" class="hero">
-      <p class="eyebrow">Cifrado local · sin servidores · sin registro</p>
-      <h1 class="hero-title">Comparte datos confidenciales<br class="br-desktop" /> sin dejar rastro</h1>
-      <p class="hero-sub">
-        Teléfonos, números de cuenta, DNI o cualquier código sensible: cífralo en tu dispositivo,
-        protégelo con un PIN y compártelo por WhatsApp mediante un enlace. Nadie que no tenga el PIN podrá leerlo.
-      </p>
-    </section>
+  <main id="main">
 
-    <!-- ============== CREATE VIEW ============== -->
-    <section id="view-create" class="view active">
-      <div class="card card-create">
-        <h2>Proteger un dato</h2>
-        <p class="muted">Este texto se cifra en tu dispositivo. Nunca se envía a ningún servidor.</p>
-
-        <label for="secretInput">Dato confidencial</label>
-        <textarea id="secretInput" rows="4" placeholder="Ej: ES91 2100 0418 4502 0005 1332 — o un teléfono, DNI, código..."></textarea>
-        <div id="detectorWarnings" class="detector-warnings" aria-live="polite"></div>
-
-        <label for="pinInput">PIN de protección</label>
-        <div class="pin-row">
-          <input id="pinInput" type="text" inputmode="numeric" maxlength="6" placeholder="6 dígitos" />
-          <button id="genPinBtn" class="btn btn-ghost small" type="button" aria-label="Generar PIN aleatorio">
-            <i class="fi fi-rr-lightbulb-on"></i><span class="btn-label"> Generar</span>
-          </button>
-        </div>
-        <p class="hint">Comparte este PIN por otro canal (llamada, en persona) — nunca en el mismo chat que el enlace.</p>
-
-        <div class="actions-row">
-          <button id="createLinkBtn" class="btn btn-primary" type="button">
-            <i class="fi fi-rr-lock"></i> Generar enlace protegido
-          </button>
-          <button id="clearCreateBtn" class="btn btn-ghost" type="button">Limpiar</button>
-        </div>
+    <!-- ============ HERO + HERRAMIENTA (modo crear) ============ -->
+    <section class="container hero" data-only="create" aria-labelledby="heroTitle">
+      <div class="card card--brand hero__brand reveal">
+        <span class="tag tag--on-brand"><svg class="icon"><use href="#i-lock"/></svg> Cifrado en tu dispositivo</span>
+        <h1 id="heroTitle" class="hero__title">Comparte lo confidencial.<br class="br-desktop" /> Sin dejar rastro.</h1>
+        <p class="lead hero__lead">
+          Un IBAN, un teléfono, un DNI. Cífralo en tu móvil, protégelo con un PIN y envíalo por WhatsApp
+          como un enlace que solo puede abrir quien tenga la clave.
+        </p>
+        <ul class="trust-list" aria-label="Garantías">
+          <li><svg class="icon"><use href="#i-check"/></svg> Sin registro ni cuentas</li>
+          <li><svg class="icon"><use href="#i-check"/></svg> Nada se envía a ningún servidor</li>
+          <li><svg class="icon"><use href="#i-check"/></svg> Gratis y funciona sin conexión</li>
+        </ul>
       </div>
 
-      <div id="resultCard" class="card card-result hidden">
-        <div class="result-badge"><i class="fi fi-rr-shield-check"></i> Enlace cifrado listo</div>
-        <label for="linkOutput">Tu enlace protegido</label>
-        <div class="link-row">
-          <input id="linkOutput" type="text" readonly />
-          <button id="copyLinkBtn" class="btn btn-ghost small" type="button" aria-label="Copiar enlace">
-            <i class="fi fi-rr-box"></i>
-          </button>
-        </div>
-        <button id="whatsappBtn" class="btn btn-wa" type="button">
-          <i class="fi fi-rr-comment-alt"></i> Enviar por WhatsApp
-        </button>
-        <div class="warning-box">
-          <i class="fi fi-rr-triangle-warning"></i>
-          <p>Este enlace no se autodestruye solo: cualquiera que tenga el enlace <strong>y</strong> el PIN podrá abrirlo.
-          Borra el mensaje del chat en cuanto lo hayan leído.</p>
+      <div class="card card--elevated hero__tool reveal" id="proteger">
+        <!-- Estado 1: formulario -->
+        <form id="createForm" class="form" novalidate autocomplete="off">
+          <span class="tag">Paso único</span>
+          <h2 class="card__title card__title--spaced">Proteger un dato</h2>
+          <p class="card__intro">Todo ocurre aquí, en tu dispositivo. Nunca sale de él.</p>
+
+          <div class="field">
+            <label class="field__label" for="secretInput">¿Qué quieres compartir?</label>
+            <textarea id="secretInput" class="textarea" rows="4" required
+              placeholder="Ej.: ES91 2100 0418 4502 0005 1332, un teléfono, un DNI, un código..."></textarea>
+            <p id="secretError" class="field__error" hidden></p>
+            <div id="detectorWarnings" class="alert-stack" aria-live="polite"></div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="pinInput">PIN de protección</label>
+            <div class="field__row">
+              <input id="pinInput" class="input input--pin" type="text" inputmode="numeric" autocomplete="one-time-code"
+                maxlength="10" placeholder="4 a 10 dígitos" aria-describedby="pinHint" />
+              <button id="genPinBtn" class="btn btn--secondary" type="button" aria-label="Generar un PIN aleatorio">
+                <svg class="icon"><use href="#i-refresh"/></svg> Generar
+              </button>
+            </div>
+            <p id="pinError" class="field__error" hidden></p>
+            <p id="pinHint" class="field__hint">Dile el PIN por otro canal: una llamada o en persona. Nunca en el mismo chat que el enlace.</p>
+          </div>
+
+          <div class="form__actions">
+            <button id="createLinkBtn" class="btn btn--primary" type="submit">
+              <svg class="icon"><use href="#i-lock"/></svg> Generar enlace protegido
+            </button>
+            <button id="clearCreateBtn" class="btn btn--outline" type="reset">Limpiar</button>
+          </div>
+        </form>
+
+        <!-- Estado 2: resultado -->
+        <div id="createResult" class="result" hidden>
+          <span class="tag tag--success"><svg class="icon"><use href="#i-shield"/></svg> Enlace listo</span>
+          <h2 class="card__title card__title--spaced">Tu enlace protegido</h2>
+          <p class="card__intro">Envíalo por WhatsApp. El PIN, por otro canal.</p>
+
+          <div class="link-box">
+            <svg class="icon"><use href="#i-link"/></svg>
+            <code id="linkOutput" title="Enlace protegido"></code>
+            <button id="copyLinkBtn" class="btn btn--outline btn--s btn--icon" type="button" aria-label="Copiar enlace">
+              <svg class="icon"><use href="#i-copy"/></svg>
+            </button>
+          </div>
+
+          <div class="result__actions">
+            <button id="whatsappBtn" class="btn btn--primary btn--block" type="button">
+              <svg class="icon"><use href="#i-message"/></svg> Enviar por WhatsApp
+            </button>
+            <button id="shareBtn" class="btn btn--secondary btn--block" type="button" hidden>
+              <svg class="icon"><use href="#i-send"/></svg> Compartir con otra app
+            </button>
+          </div>
+
+          <div class="alert alert--warning alert--spaced" role="note">
+            <svg class="icon"><use href="#i-warning"/></svg>
+            <p>El enlace no caduca solo: cualquiera que tenga el enlace <strong>y</strong> el PIN podrá abrirlo. Borra el mensaje del chat cuando lo hayan leído.</p>
+          </div>
+
+          <p class="result__back">
+            <button id="newSecretBtn" class="btn btn--tertiary" type="button">
+              <svg class="icon"><use href="#i-arrow-left"/></svg> Proteger otro dato
+            </button>
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- ============== VIEW / DECRYPT VIEW ============== -->
-    <section id="view-open" class="view">
-      <div class="card card-open">
-        <div class="result-badge"><i class="fi fi-rr-lock"></i> Contenido protegido</div>
-        <h2>Te han compartido un dato protegido</h2>
-        <p class="muted">Introduce el PIN que te han dado por otro canal para verlo.</p>
+    <!-- ============ VISTA ABRIR ENLACE (modo open) ============ -->
+    <section class="container open" data-only="open" aria-labelledby="openTitle">
+      <div class="card card--brand hero__brand reveal">
+        <span class="tag tag--on-brand"><svg class="icon"><use href="#i-lock"/></svg> Contenido protegido</span>
+        <h1 id="openTitle" class="hero__title">Te han compartido un dato protegido</h1>
+        <p class="lead hero__lead">
+          Introduce el PIN que te han pasado por otro canal. El contenido se descifra aquí, en tu dispositivo.
+        </p>
+        <ul class="trust-list">
+          <li><svg class="icon"><use href="#i-check"/></svg> El enlace ya contiene el dato cifrado</li>
+          <li><svg class="icon"><use href="#i-check"/></svg> Nadie más puede leerlo sin el PIN</li>
+        </ul>
+      </div>
 
-        <label for="pinOpenInput">PIN</label>
-        <input id="pinOpenInput" type="text" inputmode="numeric" maxlength="6" placeholder="6 dígitos" autofocus />
-        <button id="unlockBtn" class="btn btn-primary" type="button">
-          <i class="fi fi-rr-lock"></i> Desbloquear
-        </button>
-        <p id="unlockError" class="error-text hidden">PIN incorrecto o enlace dañado. Inténtalo de nuevo.</p>
+      <div class="card card--elevated reveal">
+        <form id="openForm" class="form" novalidate autocomplete="off">
+          <h2 class="card__title">Introduce el PIN</h2>
+          <p class="card__intro">Lo tienes que haber recibido por llamada, en persona u otro canal.</p>
 
-        <div id="revealBox" class="reveal-box hidden">
-          <span class="reveal-label">Contenido</span>
-          <div class="reveal-text" id="revealText"></div>
-          <button id="copyRevealBtn" class="btn btn-ghost small" type="button" aria-label="Copiar contenido">
-            <i class="fi fi-rr-box"></i><span class="btn-label"> Copiar</span>
+          <div class="field">
+            <label class="field__label" for="pinOpenInput">PIN</label>
+            <input id="pinOpenInput" class="input input--pin" type="text" inputmode="numeric" autocomplete="one-time-code"
+              maxlength="10" placeholder="Escribe el PIN" />
+            <p id="pinOpenError" class="field__error" hidden></p>
+          </div>
+
+          <div class="form__actions">
+            <button id="unlockBtn" class="btn btn--primary btn--block" type="submit">
+              <svg class="icon"><use href="#i-key"/></svg> Desbloquear
+            </button>
+          </div>
+        </form>
+
+        <div id="revealBox" class="result" hidden>
+          <span class="tag tag--success"><svg class="icon"><use href="#i-shield"/></svg> Desbloqueado</span>
+          <h2 class="card__title card__title--spaced">Contenido</h2>
+          <p class="card__intro">Cópialo y cierra esta pantalla cuando termines.</p>
+          <div id="revealText" class="secret" tabindex="0" aria-label="Contenido descifrado"></div>
+          <div class="result__actions">
+            <button id="copyRevealBtn" class="btn btn--secondary btn--block" type="button">
+              <svg class="icon"><use href="#i-copy"/></svg> Copiar contenido
+            </button>
+          </div>
+          <div class="alert alert--warning alert--spaced" role="note">
+            <svg class="icon"><use href="#i-warning"/></svg>
+            <p>Borra este mensaje del chat cuando ya no lo necesites. El enlace seguirá siendo válido mientras exista.</p>
+          </div>
+        </div>
+
+        <p class="result__back">
+          <button id="backToCreateBtn" class="btn btn--tertiary" type="button">
+            Proteger un dato yo también <svg class="icon icon--trail"><use href="#i-arrow-right"/></svg>
           </button>
-          <div class="warning-box">
-            <i class="fi fi-rr-triangle-warning"></i>
-            <p>Cierra esta pantalla y borra este mensaje del chat en cuanto ya no lo necesites.</p>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ POR QUÉ SAFESHARE ============ -->
+    <section class="container section" id="por-que" data-only="create" aria-labelledby="whyTitle">
+      <div class="block grid grid--media">
+        <figure class="chat reveal" aria-label="Ejemplo de conversación usando SafeShare">
+          <div class="chat__header">
+            <span class="chat__avatar">A</span>
+            <div>
+              <div class="chat__name">Ana</div>
+              <div class="chat__status">en línea</div>
+            </div>
+          </div>
+          <div class="chat__bubble chat__bubble--them">Oye, ¿me pasas tu IBAN para la transferencia?<span class="chat__time">18:02</span></div>
+          <div class="chat__bubble chat__bubble--me">
+            Te lo paso protegido con SafeShare 🔒
+            <span class="chat__link"><svg class="icon"><use href="#i-lock"/></svg><span>safeshare.app/#d=Kx9T4…c2Qw</span></span>
+            <span class="chat__time">18:03</span>
+          </div>
+          <div class="chat__bubble chat__bubble--them">¿Y el PIN?<span class="chat__time">18:03</span></div>
+          <div class="chat__bubble chat__bubble--me">Te llamo ahora y te lo digo 📞<span class="chat__time">18:04</span></div>
+        </figure>
+
+        <div class="reveal">
+          <span class="tag">Por qué SafeShare</span>
+          <h2 id="whyTitle" class="mt-s mb-m">Lo sensible, fuera del chat</h2>
+          <div class="feature-list">
+            <div class="feature">
+              <span class="feature__icon"><svg class="icon"><use href="#i-phone"/></svg></span>
+              <div>
+                <h3>Tu dato nunca sale de tu móvil</h3>
+                <p>El cifrado ocurre en tu dispositivo con AES-256. SafeShare no tiene servidores a los que enviarlo.</p>
+              </div>
+            </div>
+            <div class="feature">
+              <span class="feature__icon"><svg class="icon"><use href="#i-key"/></svg></span>
+              <div>
+                <h3>Solo lo lee quien tiene el PIN</h3>
+                <p>Sin el PIN, el enlace es texto cifrado sin sentido. Ni WhatsApp ni nadie en medio puede leerlo.</p>
+              </div>
+            </div>
+            <div class="feature">
+              <span class="feature__icon"><svg class="icon"><use href="#i-user-x"/></svg></span>
+              <div>
+                <h3>Sin cuentas. Sin rastro.</h3>
+                <p>No pedimos registro, no guardamos nada y no hay analítica. El enlace es el único lugar donde existe el dato.</p>
+              </div>
+            </div>
+          </div>
+          <p class="mt-l">
+            <a href="#proteger" class="btn btn--tertiary">Proteger un dato ahora <svg class="icon icon--trail"><use href="#i-arrow-right"/></svg></a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CÓMO FUNCIONA ============ -->
+    <section class="container section" id="como-funciona" data-only="create" aria-labelledby="howTitle">
+      <div class="section__head reveal">
+        <div>
+          <span class="tag">Cómo funciona</span>
+          <h2 id="howTitle">Cuatro pasos. Menos de un minuto.</h2>
+        </div>
+        <p class="lead">No hay que instalar nada ni crear una cuenta. La persona que recibe el enlace tampoco.</p>
+      </div>
+      <div class="grid grid--4">
+        <article class="card card--bordered card--link reveal">
+          <span class="step__num">1</span>
+          <h3>Escribe el dato</h3>
+          <p>Pega el número, el código o el texto que quieras compartir.</p>
+        </article>
+        <article class="card card--bordered card--link reveal">
+          <span class="step__num">2</span>
+          <h3>Elige un PIN</h3>
+          <p>Escríbelo o genera uno aleatorio. Es la única llave para abrir el enlace.</p>
+        </article>
+        <article class="card card--bordered card--link reveal">
+          <span class="step__num">3</span>
+          <h3>Comparte el enlace</h3>
+          <p>Envíalo por WhatsApp. El PIN, por llamada o en persona.</p>
+        </article>
+        <article class="card card--bordered card--link reveal">
+          <span class="step__num">4</span>
+          <h3>Se abre con el PIN</h3>
+          <p>Quien lo recibe introduce el PIN y ve el contenido en su dispositivo.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ SEGURIDAD ============ -->
+    <section class="container section" id="seguridad" data-only="create" aria-labelledby="secTitle">
+      <div class="section__head reveal">
+        <div>
+          <span class="tag">Seguridad</span>
+          <h2 id="secTitle">Diseñado para que ni siquiera SafeShare pueda leerlo</h2>
+        </div>
+        <p class="lead">Pensado desde el primer día para no depender de nadie: ni de un servidor, ni de una empresa, ni de una cuenta.</p>
+      </div>
+      <div class="grid grid--4">
+        <article class="card card--bordered card--link reveal">
+          <span class="feature__icon"><svg class="icon"><use href="#i-lock"/></svg></span>
+          <h3>AES-256-GCM</h3>
+          <p>Cifrado autenticado con la Web Crypto API del navegador. La clave se deriva del PIN con PBKDF2 y 150.000 iteraciones.</p>
+        </article>
+        <article class="card card--bordered card--link reveal">
+          <span class="feature__icon"><svg class="icon"><use href="#i-hash"/></svg></span>
+          <h3>Todo viaja tras la almohadilla</h3>
+          <p>El dato cifrado va en el fragmento de la URL. El navegador nunca envía esa parte a ningún servidor, ni siquiera al que aloja la web.</p>
+        </article>
+        <article class="card card--bordered card--link reveal">
+          <span class="feature__icon"><svg class="icon"><use href="#i-cloud-off"/></svg></span>
+          <h3>Sin backend</h3>
+          <p>Web estática. No hay base de datos que atacar, cuentas que filtrar ni registros que consultar.</p>
+        </article>
+        <article class="card card--bordered card--link reveal">
+          <span class="feature__icon"><svg class="icon"><use href="#i-eye"/></svg></span>
+          <h3>Aviso de datos críticos</h3>
+          <p>Si detectamos una tarjeta completa junto a su CVV, te avisamos: eso no se comparte ni cifrado. Usa tu banco.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ PREGUNTAS FRECUENTES ============ -->
+    <section class="container section" id="preguntas" data-only="create" aria-labelledby="faqTitle">
+      <div class="block">
+        <div class="grid grid--media align-start">
+          <div class="reveal">
+            <span class="tag">Preguntas frecuentes</span>
+            <h2 id="faqTitle" class="mt-s">Lo que conviene saber antes de usarlo</h2>
+            <p class="lead mt-s">SafeShare protege la confidencialidad del contenido. Estas son sus reglas y sus límites, sin letra pequeña.</p>
+          </div>
+          <div class="reveal">
+            <details class="faq">
+              <summary>¿El enlace caduca o se autodestruye?<svg class="icon"><use href="#i-chevron-down"/></svg></summary>
+              <div class="faq__body">
+                <p>No. Al no existir servidor, no hay dónde borrar nada de forma remota. Mientras alguien conserve el enlace <strong>y</strong> el PIN, podrá abrirlo.</p>
+                <p>Por eso la app te recuerda borrar el mensaje del chat cuando lo hayan leído.</p>
+              </div>
+            </details>
+            <details class="faq">
+              <summary>¿Puedo enviar el PIN en el mismo chat?<svg class="icon"><use href="#i-chevron-down"/></svg></summary>
+              <div class="faq__body">
+                <p>Mejor no. Si el enlace y el PIN viajan juntos, quien acceda a ese chat tiene las dos piezas. Dilo por llamada, en persona o por otra app.</p>
+              </div>
+            </details>
+            <details class="faq">
+              <summary>¿Sirve para compartir una tarjeta con su CVV?<svg class="icon"><use href="#i-chevron-down"/></svg></summary>
+              <div class="faq__body">
+                <p>No lo recomendamos, ni cifrado. Para operaciones con tarjeta usa siempre los canales oficiales de tu banco. SafeShare te avisará si detecta esa combinación.</p>
+              </div>
+            </details>
+            <details class="faq">
+              <summary>¿Qué pasa si se pierde el PIN?<svg class="icon"><use href="#i-chevron-down"/></svg></summary>
+              <div class="faq__body">
+                <p>Nadie puede recuperarlo, tampoco SafeShare. El enlace queda ilegible. Genera uno nuevo y vuelve a compartirlo.</p>
+              </div>
+            </details>
+            <details class="faq">
+              <summary>¿Funciona sin conexión?<svg class="icon"><use href="#i-chevron-down"/></svg></summary>
+              <div class="faq__body">
+                <p>Sí. Una vez cargada, la app queda disponible sin conexión y puedes instalarla en el móvil como cualquier otra.</p>
+              </div>
+            </details>
           </div>
         </div>
       </div>
-      <button id="backToCreateBtn" class="btn btn-ghost">
-        <i class="fi fi-rr-arrow-right" style="transform: scaleX(-1)"></i> Proteger otro dato
-      </button>
     </section>
 
-    <!-- ============== HOW IT WORKS STEPS ============== -->
-    <section id="steps" class="steps">
-      <h2>Cómo funciona</h2>
-      <div class="steps-grid">
-        <div class="step">
-          <div class="step-num">1</div>
-          <i class="fi fi-rr-comment-alt step-icon"></i>
-          <h3>Escribe el dato</h3>
-          <p>Pega el número, código o dato que quieras compartir.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <i class="fi fi-rr-lock step-icon"></i>
-          <h3>Se cifra en tu móvil</h3>
-          <p>AES-256, en tu dispositivo. Nada viaja a ningún servidor.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <i class="fi fi-rr-link step-icon"></i>
-          <h3>Comparte el enlace</h3>
-          <p>Envíalo por WhatsApp. El PIN, por otro canal.</p>
-        </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <i class="fi fi-rr-shield-check step-icon"></i>
-          <h3>Solo con PIN se lee</h3>
-          <p>Sin el PIN, el enlace es un texto cifrado sin sentido.</p>
+    <!-- ============ CIERRE ============ -->
+    <section class="jumbo" data-only="create" aria-labelledby="ctaTitle">
+      <div class="container">
+        <div class="jumbo__inner reveal">
+          <span class="tag tag--on-brand">Empieza ahora</span>
+          <h2 id="ctaTitle">Tu próximo dato sensible, protegido en menos de un minuto</h2>
+          <p class="lead">Sin registro, sin instalar nada, sin que nadie más pueda leerlo.</p>
+          <a href="#proteger" class="btn btn--dark">Proteger un dato</a>
         </div>
       </div>
     </section>
-
-    <!-- ============== MODAL "CÓMO FUNCIONA" ============== -->
-    <div id="howModal" class="modal-overlay hidden">
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="howModalTitle">
-        <h3 id="howModalTitle" class="modal-title"><i class="fi fi-rr-info"></i> Puntos clave de seguridad</h3>
-        <ul class="how-list">
-          <li><i class="fi fi-rr-lock"></i> <span>El cifrado (AES-256) ocurre en tu dispositivo: la app nunca envía tu dato en claro a ningún servidor.</span></li>
-          <li><i class="fi fi-rr-link"></i> <span>Todo el contenido cifrado viaja dentro del propio enlace (tras el símbolo #), que ni siquiera SafeShare llega a ver.</span></li>
-          <li><i class="fi fi-rr-triangle-warning"></i> <span>El enlace no se autodestruye ni caduca solo: seguirá siendo válido mientras alguien tenga el enlace y el PIN. No sustituye borrar el mensaje del chat.</span></li>
-          <li><i class="fi fi-rr-cross-circle"></i> <span>No compartas nunca el PIN por el mismo canal que el enlace, y evita datos extremadamente críticos (tarjeta completa + CVV): para eso, usa siempre canales oficiales del banco.</span></li>
-        </ul>
-        <button id="howCloseBtn" class="btn btn-primary" type="button" style="width:100%">Entendido</button>
-      </div>
-    </div>
   </main>
 
+  <!-- ============ Pie ============ -->
   <footer class="footer">
-    <p>SafeShare no almacena ni transmite tus datos a ningún servidor. Todo el cifrado ocurre en tu dispositivo.</p>
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <a class="brand" href="./" aria-label="SafeShare">
+            <span class="brand__mark"><svg class="icon"><use href="#i-lock"/></svg></span>
+            <span>SafeShare</span>
+          </a>
+          <p class="footer__tagline">Comparte datos confidenciales por WhatsApp sin que nadie más pueda leerlos. Cifrado en tu dispositivo, sin servidores.</p>
+        </div>
+        <div data-only="create">
+          <h4>Producto</h4>
+          <nav class="footer__links" aria-label="Enlaces del producto">
+            <a href="#por-que">Por qué SafeShare</a>
+            <a href="#como-funciona">Cómo funciona</a>
+            <a href="#seguridad">Seguridad</a>
+            <a href="#preguntas">Preguntas frecuentes</a>
+          </nav>
+        </div>
+        <div>
+          <h4>Privacidad</h4>
+          <div class="footer__links">
+            <a href="#seguridad" data-only="create">Sin servidores ni analítica</a>
+            <a href="./" data-only="open">Proteger un dato</a>
+            <a href="#preguntas" data-only="create">Límites del servicio</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2026 SafeShare · Proyecto personal y educativo.</p>
+        <p>No sustituye los canales oficiales de tu banco para operaciones sensibles.</p>
+      </div>
+    </div>
   </footer>
 
-  <script src="js/crypto.js"></script>
-  <script src="js/detector.js"></script>
-  <script src="js/app.js"></script>
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>

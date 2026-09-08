@@ -1,15 +1,15 @@
 {
   "name": "SafeShare",
   "short_name": "SafeShare",
-  "description": "Cifra datos confidenciales (teléfono, cuenta bancaria, DNI...) en tu dispositivo y compártelos por WhatsApp mediante un enlace protegido con PIN. 100% local, sin servidores.",
+  "description": "Cifra datos confidenciales (teléfono, IBAN, DNI...) en tu dispositivo y compártelos por WhatsApp mediante un enlace protegido con PIN. Sin servidores, sin registro.",
   "lang": "es",
   "dir": "ltr",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#0b1220",
-  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "theme_color": "#2760c2",
   "categories": ["utilities", "security"],
   "icons": [
     {
