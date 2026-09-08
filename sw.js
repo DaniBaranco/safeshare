@@ -6,7 +6,7 @@
 // cifrado vive únicamente en el fragmento de la URL, que nunca llega al
 // service worker ni a la caché.
 
-const VERSION = 'v2';
+const VERSION = 'v3';
 const CACHE = `safeshare-${VERSION}`;
 
 const APP_SHELL = [

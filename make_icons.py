@@ -13,8 +13,8 @@ Requiere Pillow: pip install pillow
 """
 from PIL import Image, ImageDraw
 
-ACCENT_A = (37, 99, 235, 255)   # #2563eb, azul de marca (inicio degradado)
-ACCENT_B = (14, 165, 233, 255)  # #0ea5e9, azul cian (fin degradado)
+ACCENT_A = (239, 138, 60, 255)  # #ef8a3c, naranja claro de marca (inicio degradado)
+ACCENT_B = (200, 95, 20, 255)   # #c85f14, naranja profundo (fin degradado)
 WHITE = (255, 255, 255, 255)
 BG_WHITE = (255, 255, 255, 255)
 

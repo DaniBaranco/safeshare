@@ -121,12 +121,14 @@ npm test   # o: node --test tests/
 
 ## Estilo visual
 
-Sistema inspirado en el design system de Cabify, aplicado a la identidad azul
-de SafeShare: tema claro, escala de color de 11 pasos, bloques con radios
-grandes sobre fondos tintados, botones planos de 56 px que solo cambian de
-color en hover, tarjetas blancas con borde neutro, sombras muy suaves y
-transiciones cortas con easing *out*. Copy corto, en imperativo y orientado
-a beneficio.
+Sistema inspirado en el design system de Cabify, aplicado a la identidad de
+SafeShare: naranja claro como acento (con texto oscuro encima para mantener
+el contraste), fondo blanco hueso con neutros cálidos, escalas de color de 11
+pasos, bloques con radios grandes, botones planos de 56 px que solo cambian de
+color en hover, sombras muy suaves y transiciones cortas con easing *out*.
+Copy corto, en imperativo y orientado a beneficio. La página es
+deliberadamente concisa: hero con la herramienta, un bloque "Cómo funciona"
+con tres pasos y tres preguntas clave sobre los límites del servicio.
 
 ## Privacidad
 

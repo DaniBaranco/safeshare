@@ -91,7 +91,7 @@ Convenciones:
 - **BEM ligero**: `.bloque`, `.bloque__elemento`, `.bloque--variante`.
   Estados con `.is-*` o atributos ARIA (`[aria-busy="true"]`,
   `[aria-invalid="true"]`).
-- **Escalas crudas vs. semánticas.** Las variables `--b-60`, `--n-20`... son
+- **Escalas crudas vs. semánticas.** Las variables `--o-50`, `--n-20`... son
   la paleta. Los componentes solo usan las semánticas
   (`--color-accent`, `--color-border`...). Así un cambio de tema es un cambio
   en un solo bloque de `tokens.css`.
@@ -104,12 +104,17 @@ Convenciones:
 
 ## Sistema visual (referencia Cabify)
 
-Lenguaje aplicado: tema claro, un color de marca (azul) con escala de 11
-pasos, bloques con radios grandes (32 / 64 px) sobre fondos tintados, botones
-planos de 56 px con radio 8 px que solo cambian de color en hover, tarjetas
-blancas con borde neutro, sombras muy suaves, y transiciones de 0,25 a 0,75 s
-con `cubic-bezier(0.22, 1, 0.36, 1)`. El copy es corto, en imperativo y
-orientado a beneficio ("Comparte lo confidencial. Sin dejar rastro.").
+Lenguaje aplicado: tema claro sobre blanco hueso, un color de marca (naranja
+claro) con escala de 11 pasos y neutros cálidos, bloques con radios grandes
+(32 / 64 px) sobre fondos tintados, botones planos de 56 px con radio 8 px que
+solo cambian de color en hover, sombras muy suaves, y transiciones de 0,25 a
+0,75 s con `cubic-bezier(0.22, 1, 0.36, 1)`. El copy es corto, en imperativo
+y orientado a beneficio ("Comparte lo confidencial. Sin dejar rastro.").
+
+Regla de contraste: el acento es claro, así que `--color-accent` se usa solo
+en rellenos y lleva texto oscuro (`--color-text-on-brand`). Para texto e
+iconos de acento sobre fondo claro existe `--color-accent-text`, un naranja
+más profundo que cumple AA. Nunca uses `--color-accent` como color de texto.
 
 ## Tests
 

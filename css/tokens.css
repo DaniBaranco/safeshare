@@ -4,45 +4,59 @@
    debería declarar colores, tamaños o duraciones en crudo.
    Sistema inspirado en el design system de Cabify (escalas de color por
    tono, tipografía por pasos, espaciado y radios discretos, movimiento
-   corto con easing "out"), aplicado a la identidad azul de SafeShare.
+   corto con easing "out"), aplicado a la identidad de SafeShare: naranja
+   claro como acento y fondo blanco hueso con neutros cálidos.
+
+   Nota de contraste: el naranja de acento es claro, así que el texto
+   sobre él es OSCURO (--color-text-on-brand) y, como texto sobre fondo
+   claro, se usa un naranja más profundo (--color-accent-text). Nunca
+   uses --color-accent para texto.
    ===================================================================== */
 
 :root {
   /* ---------- Escalas crudas (no usar directamente en componentes) ---------- */
-  --b-100: #111a2f; --b-90: #192d55; --b-80: #243d78; --b-70: #254a9b;
-  --b-60: #2760c2;  --b-50: #4583d4; --b-40: #62a8e8; --b-30: #9bc8f2;
-  --b-20: #c7e0f8;  --b-10: #ecf4fd; --b-0: #f5f9fe;
+  --o-100: #3a1a05; --o-90: #5c2a0a; --o-80: #7d3a0d; --o-70: #a34c10;
+  --o-60: #c85f14;  --o-50: #ef8a3c; --o-40: #f5a25e; --o-30: #f9c08a;
+  --o-20: #fcdcbb;  --o-10: #fdefe0; --o-0: #fef8f1;
 
-  --n-100: #1a1a1c; --n-90: #2c2d3c; --n-80: #3c3e55; --n-70: #4b4c6a;
-  --n-60: #5e6088;  --n-50: #7d7fa5; --n-40: #9ea1be; --n-30: #c0c2d8;
-  --n-20: #dbdce8;  --n-10: #f3f3f7; --n-0: #f8f8fb;
+  --n-100: #1f1811; --n-90: #2e251c; --n-80: #3f342a; --n-70: #524539;
+  --n-60: #6b5d4f;  --n-50: #877868; --n-40: #a69787; --n-30: #c5b8a9;
+  --n-20: #e1d8cc;  --n-10: #efe9df; --n-0: #f7f3ec;
 
   --g-60: #017251; --g-50: #0c936b; --g-20: #96efcb; --g-10: #dafaeb; --g-0: #ecfcf5;
   --r-60: #bf2721; --r-50: #e74a41; --r-20: #fad4d3; --r-10: #fdf0ef;
-  --o-60: #a64707; --o-50: #d06204; --o-20: #fed7a2; --o-10: #fff1db;
-  --w-0: #ffffff;
+  --y-60: #8b5908; --y-50: #ad7708; --y-20: #fddb61; --y-10: #fff3c6;
 
   /* ---------- Tokens semánticos ---------- */
-  --color-accent: var(--b-60);
-  --color-accent-hover: var(--b-50);
-  --color-accent-deep: var(--b-70);
-  --color-accent-strong: var(--b-100);
-  --color-accent-strong-hover: var(--b-90);
+  --color-accent: var(--o-50);              /* rellenos: botones, tarjeta de marca */
+  --color-accent-hover: var(--o-40);
+  --color-accent-text: var(--o-70);         /* texto e iconos de acento sobre fondo claro */
+  --color-accent-text-hover: var(--o-60);
+  --color-accent-strong: var(--n-100);
+  --color-accent-strong-hover: var(--n-90);
 
-  --color-bg: var(--w-0);
-  --color-bg-subdued: var(--b-0);
-  --color-surface: var(--b-10);
-  --color-surface-hover: var(--b-20);
+  --color-bg: var(--n-0);                   /* blanco hueso */
+  --color-bg-subdued: var(--n-10);          /* bloques redondeados */
+  --color-card: #fdfbf7;                    /* tarjetas e inputs: un punto más claro que el fondo */
+  --color-surface: var(--o-10);             /* chips y botones secundarios */
+  --color-surface-hover: var(--o-20);
+  --color-header-bg: rgba(247, 243, 236, 0.88);
 
   --color-text: var(--n-100);
   --color-text-secondary: var(--n-60);
-  --color-text-brand: var(--b-90);
-  --color-text-on-brand: var(--w-0);
-  --color-text-on-brand-muted: var(--b-20);
+  --color-text-brand: var(--o-90);
+  --color-text-on-brand: var(--o-100);
+  --color-text-on-brand-muted: var(--o-90);
+  --color-on-brand-chip: rgba(58, 26, 5, 0.10);
+
+  --color-footer-bg: var(--n-100);
+  --color-footer-text: var(--n-0);
+  --color-footer-muted: var(--n-30);
+  --color-footer-chip: rgba(255, 255, 255, 0.12);
 
   --color-border: var(--n-20);
   --color-border-hover: var(--n-30);
-  --color-focus-ring: var(--b-20);
+  --color-focus-ring: var(--o-20);
 
   --color-success: var(--g-60);
   --color-success-bg: var(--g-0);
@@ -50,9 +64,9 @@
   --color-danger: var(--r-60);
   --color-danger-bg: var(--r-10);
   --color-danger-border: var(--r-20);
-  --color-warning: var(--o-60);
-  --color-warning-bg: var(--o-10);
-  --color-warning-border: var(--o-20);
+  --color-warning: var(--y-60);
+  --color-warning-bg: var(--y-10);
+  --color-warning-border: var(--y-20);
 
   /* ---------- Tipografía ---------- */
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -73,17 +87,17 @@
   /* ---------- Espaciado ---------- */
   --sp-3xs: 4px;  --sp-2xs: 8px;  --sp-xs: 12px; --sp-s: 16px;
   --sp-m: 24px;   --sp-l: 36px;   --sp-xl: 48px; --sp-2xl: 72px; --sp-3xl: 120px;
-  --section-gap: var(--sp-3xl);
-  --block-pad: 80px;
+  --section-gap: var(--sp-2xl);
+  --block-pad: 64px;
 
   /* ---------- Radios ---------- */
   --radius-2xs: 6px; --radius-xs: 8px;  --radius-s: 16px; --radius-m: 24px;
   --radius-l: 32px;  --radius-xl: 48px; --radius-2xl: 64px; --radius-pill: 999px;
 
   /* ---------- Sombras ---------- */
-  --shadow-soft: 0 8px 40px rgba(62, 62, 62, 0.04);
-  --shadow-card: 0 8px 40px rgba(33, 34, 64, 0.10);
-  --shadow-float: 0 0 40px rgba(33, 34, 64, 0.16);
+  --shadow-soft: 0 8px 40px rgba(62, 50, 30, 0.05);
+  --shadow-card: 0 8px 40px rgba(62, 50, 30, 0.10);
+  --shadow-float: 0 0 40px rgba(62, 50, 30, 0.16);
 
   /* ---------- Movimiento ---------- */
   --dur-faster: 0.125s;
@@ -113,8 +127,8 @@
 
 @media (max-width: 767px) {
   :root {
-    --section-gap: var(--sp-2xl);
-    --block-pad: var(--sp-xl);
+    --section-gap: var(--sp-xl);
+    --block-pad: var(--sp-l);
     --fs-3xl: 32px; --lh-3xl: 40px;
     --fs-2xl: 28px; --lh-2xl: 36px;
     --fs-xl: 22px;  --lh-xl: 30px;
