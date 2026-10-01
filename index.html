@@ -26,6 +26,17 @@
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
+
+  <!-- Tema guardado: se aplica antes de pintar para evitar parpadeo. -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('safeshare:theme');
+        var ok = ['orange','coral','amber','green','teal','blue','indigo','purple','pink','slate'];
+        if (ok.indexOf(t) !== -1) document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body data-mode="create">
 
@@ -46,6 +57,7 @@
     <symbol id="i-key" viewBox="0 0 24 24"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
     <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
     <symbol id="i-send" viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2"/></symbol>
   </svg>
 
   <!-- ============ Cabecera ============ -->
@@ -60,6 +72,17 @@
         <a href="#preguntas">Preguntas</a>
       </nav>
       <div class="header__actions">
+        <div class="theme-menu">
+          <button id="themeBtn" class="btn btn--outline btn--s btn--icon" type="button"
+            aria-haspopup="true" aria-expanded="false" aria-controls="themePanel"
+            aria-label="Cambiar el tema de color">
+            <svg class="icon icon--xs"><use href="#i-palette"/></svg>
+          </button>
+          <div id="themePanel" class="theme-panel" role="dialog" aria-label="Tema de color" hidden>
+            <p class="theme-panel__title" id="themePanelTitle">Tema de color</p>
+            <div id="themeSwatches" class="theme-swatches" role="radiogroup" aria-labelledby="themePanelTitle"></div>
+          </div>
+        </div>
         <button id="installBtn" class="btn btn--outline btn--s" type="button" hidden aria-label="Instalar la app">
           <svg class="icon icon--xs"><use href="#i-download"/></svg><span class="header__label">Instalar</span>
         </button>
@@ -281,7 +304,7 @@
           <details class="faq">
             <summary>¿El enlace caduca o se autodestruye?<svg class="icon"><use href="#i-chevron-down"/></svg></summary>
             <div class="faq__body">
-              <p>No. Al no existir servidor, no hay dónde borrar nada de forma remota. Mientras alguien conserve el enlace <strong>y</strong> el PIN, podrá abrirlo. Por eso conviene borrar el mensaje del chat cuando lo hayan leído.</p>
+              <p>No. Al no existir servidor, no hay dónde borrar nada de forma remota. Mientras alguien conserve el enlace y el PIN, podrá abrirlo. Por eso conviene borrar el mensaje del chat cuando lo hayan leído.</p>
             </div>
           </details>
           <details class="faq">

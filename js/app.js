@@ -8,6 +8,7 @@ import { qs } from './ui/dom.js';
 import { MODES, initModeRouter } from './ui/mode.js';
 import { initReveal } from './ui/reveal.js';
 import { initHeader } from './ui/header.js';
+import { initThemePicker } from './ui/theme.js';
 import { initInstallPrompt, registerServiceWorker } from './services/pwa.js';
 import { initCreateFeature } from './features/create.js';
 import { initOpenFeature } from './features/open.js';
@@ -25,5 +26,6 @@ initModeRouter((mode) => {
 });
 
 initHeader();
+initThemePicker();
 initInstallPrompt(qs('#installBtn'));
 registerServiceWorker(CONFIG.UI.SERVICE_WORKER_PATH);

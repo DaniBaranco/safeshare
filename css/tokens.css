@@ -125,6 +125,72 @@
   color-scheme: light;
 }
 
+/* =====================================================================
+   Temas de color
+   Un tema solo redefine la escala de acento cruda (--o-*) y el tinte de
+   los chips sobre la tarjeta de marca. Todos los tokens semánticos
+   (--color-accent, --color-accent-text, --color-surface...) derivan de
+   esa escala, así que cambian en bloque sin tocar ningún componente.
+   La escala neutra cálida (--n-*) se mantiene como lienzo común.
+   El tema por defecto (naranja) vive en :root; "orange" no necesita
+   bloque propio. Todas las paletas están calibradas para cumplir el
+   contraste AA en texto de acento, botones y chips.
+   ===================================================================== */
+html[data-theme="coral"] {
+  --o-100: #380d05; --o-90: #5c160a; --o-80: #7d1e0d; --o-70: #a22610;
+  --o-60: #c82f14;  --o-50: #ef583e; --o-40: #f5735c; --o-30: #f99b8b;
+  --o-20: #fcc4ba;  --o-10: #fde6e2; --o-0: #fef3f1;
+  --color-on-brand-chip: rgba(56, 13, 5, 0.10);
+}
+html[data-theme="amber"] {
+  --o-100: #382a05; --o-90: #5c450a; --o-80: #7d5d0d; --o-70: #8e690e;
+  --o-60: #c89514;  --o-50: #efbd3e; --o-40: #f5c95c; --o-30: #f9da8b;
+  --o-20: #fceaba;  --o-10: #fdf6e2; --o-0: #fefaf1;
+  --color-on-brand-chip: rgba(56, 42, 5, 0.10);
+}
+html[data-theme="green"] {
+  --o-100: #0b321b; --o-90: #14522e; --o-80: #1b6f3e; --o-70: #1e7e46;
+  --o-60: #2ab162;  --o-50: #54d98b; --o-40: #6fe29f; --o-30: #98ebbb;
+  --o-20: #c3f4d7;  --o-10: #e6faee; --o-0: #f2fcf7;
+  --color-on-brand-chip: rgba(11, 50, 27, 0.10);
+}
+html[data-theme="teal"] {
+  --o-100: #093430; --o-90: #10564f; --o-80: #15746b; --o-70: #167b71;
+  --o-60: #21baab;  --o-50: #4be2d3; --o-40: #67e9dc; --o-30: #93f1e7;
+  --o-20: #bff7f2;  --o-10: #e4fbf9; --o-0: #f2fdfc;
+  --color-on-brand-chip: rgba(9, 52, 48, 0.10);
+}
+html[data-theme="blue"] {
+  --o-100: #061f37; --o-90: #0c345a; --o-80: #10477a; --o-70: #145c9f;
+  --o-60: #1870c3;  --o-50: #4299eb; --o-40: #60abf1; --o-30: #8dc4f6;
+  --o-20: #bcdcfb;  --o-10: #e3f0fc; --o-0: #f1f8fe;
+  --color-on-brand-chip: rgba(6, 31, 55, 0.10);
+}
+html[data-theme="indigo"] {
+  --o-100: #090e34; --o-90: #101856; --o-80: #152174; --o-70: #1b2a97;
+  --o-60: #2133ba;  --o-50: #6574e6; --o-40: #6777e9; --o-30: #939ef1;
+  --o-20: #bfc6f7;  --o-10: #e4e7fb; --o-0: #f2f3fd;
+  --color-on-brand-chip: rgba(9, 14, 52, 0.10);
+}
+html[data-theme="purple"] {
+  --o-100: #210c31; --o-90: #371650; --o-80: #4a1d6d; --o-70: #60258e;
+  --o-60: #762dae;  --o-50: #a663d9; --o-40: #b071df; --o-30: #c79ae9;
+  --o-20: #dec4f3;  --o-10: #f1e6f9; --o-0: #f8f3fc;
+  --color-on-brand-chip: rgba(33, 12, 49, 0.10);
+}
+html[data-theme="pink"] {
+  --o-100: #330a1f; --o-90: #541233; --o-80: #711845; --o-70: #941f59;
+  --o-60: #b6266e;  --o-50: #de4f96; --o-40: #e56ba8; --o-30: #ee96c2;
+  --o-20: #f6c1db;  --o-10: #fae5f0; --o-0: #fdf2f7;
+  --color-on-brand-chip: rgba(51, 10, 31, 0.10);
+}
+html[data-theme="slate"] {
+  --o-100: #1a1e23; --o-90: #2c323a; --o-80: #3c444e; --o-70: #4e5865;
+  --o-60: #5f6c7c;  --o-50: #8895a5; --o-40: #9ca7b5; --o-30: #b9c1cb;
+  --o-20: #d6dbe1;  --o-10: #eeeff2; --o-0: #f6f7f8;
+  --color-on-brand-chip: rgba(26, 30, 35, 0.10);
+}
+
 @media (max-width: 767px) {
   :root {
     --section-gap: var(--sp-xl);

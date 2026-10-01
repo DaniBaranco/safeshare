@@ -39,6 +39,7 @@ js/
 │   ├── toast.js         Feedback no bloqueante (sustituye a alert()).
 │   ├── reveal.js        Aparición al hacer scroll (IntersectionObserver).
 │   ├── header.js        Sombra de la cabecera al hacer scroll.
+│   ├── theme.js         Selector de tema de color (popover + localStorage).
 │   └── mode.js          Router de modo create/open sobre body[data-mode].
 └── features/            Un fichero por caso de uso. Orquestan core+services+ui.
     ├── create.js        Proteger un dato → enlace → compartir.
@@ -72,6 +73,12 @@ Si una feature necesita hablar con otra, lo hace a través de la URL o de
   lógica, un fichero en `features/`.
 - **Textos de UI generados por JS**: en la propia feature. Si el volumen
   crece, extraer a `js/i18n/es.js` con un `t(key)` mínimo.
+- **Un nuevo tema de color**: añade un bloque `html[data-theme="<id>"]` en
+  `tokens.css` que redefina la escala de acento (`--o-*`) y el tinte
+  `--color-on-brand-chip`, y una entrada en `THEMES` de `js/ui/theme.js`. No
+  hace falta tocar ningún componente: todos los tokens semánticos derivan de
+  esa escala. Calibra la paleta para mantener contraste AA (texto de acento
+  sobre fondo claro con el paso 70; texto oscuro sobre el acento con el 100).
 
 ## Capas del CSS
 

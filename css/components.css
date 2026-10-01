@@ -388,3 +388,82 @@
 .mt-m { margin-top: var(--sp-m); }
 .mt-l { margin-top: var(--sp-l); }
 .mb-m { margin-bottom: var(--sp-m); }
+
+/* ---------- Selector de tema ---------- */
+.theme-menu { position: relative; display: flex; }
+
+.theme-panel {
+  position: absolute;
+  top: calc(100% + var(--sp-2xs));
+  right: 0;
+  z-index: var(--z-header);
+  width: min(340px, calc(100vw - 2 * var(--gutter)));
+  padding: var(--sp-s);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-s);
+  box-shadow: var(--shadow-float);
+  animation: fade-in var(--dur-fast) var(--ease-out-quint);
+}
+.theme-panel__title {
+  margin: 0 0 var(--sp-xs);
+  color: var(--color-text);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-xs);
+  font-weight: var(--fw-bold);
+}
+.theme-swatches {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-2xs);
+}
+
+.swatch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2xs);
+  min-width: 0;
+  padding: var(--sp-2xs) var(--sp-xs);
+  padding-right: calc(var(--icon-xs) + var(--sp-s));
+  border: 1px solid transparent;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--color-text);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition-cta);
+}
+.swatch:hover { background: var(--color-bg-subdued); }
+.swatch:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--color-focus-ring); }
+.swatch__dot {
+  width: var(--icon-s);
+  height: var(--icon-s);
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
+  background: var(--swatch);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+.swatch__name { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.swatch__check {
+  position: absolute;
+  right: var(--sp-xs);
+  top: 50%;
+  transform: translateY(-50%);
+  flex-shrink: 0;
+  color: var(--color-accent-text);
+  opacity: 0;
+}
+.swatch[aria-checked="true"] { border-color: var(--color-border-hover); background: var(--color-bg-subdued); }
+.swatch[aria-checked="true"] .swatch__check { opacity: 1; }
+
+@media (max-width: 767px) {
+  .theme-panel {
+    position: fixed;
+    top: calc(var(--header-h) + var(--sp-2xs));
+    right: var(--gutter);
+    left: auto;
+  }
+}
