@@ -195,7 +195,7 @@
 .form__actions .btn--primary { flex: 1 1 240px; }
 @media (max-width: 767px) {
   .form__actions { flex-direction: column; }
-  .form__actions .btn { width: 100%; }
+  .form__actions .btn { width: 100%; flex: 0 0 auto; }
 }
 
 /* ---------- Alertas ---------- */
